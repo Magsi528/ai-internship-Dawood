@@ -1,78 +1,53 @@
-# Titanic Dataset - Exploratory Data Analysis
+# Task 04 - NumPy & Pandas for Data Analysis
 
-## PKCERT AI & Software Development Internship - Task 04, Part C
+PKCERT AI & Software Development Internship
 
-## Dataset
+## Folder Structure
 
-The dataset used is the well known Titanic passenger dataset (`titanic.csv`), which contains
-information about 891 passengers who were aboard the Titanic. It includes details like:
+```
+Task04/
+├── part_a_numpy.py       -> Part A: NumPy fundamentals (40 marks)
+├── part_b_pandas.py      -> Part B: Pandas fundamentals (30 marks)
+├── mini_project/         -> Part C: Data analysis mini project (30 marks)
+│   ├── titanic.csv
+│   ├── titanic_analysis.py
+│   ├── titanic_cleaned.csv
+│   └── README.md
+└── README.md             -> this file
+```
 
-- `PassengerId`, `Name`, `Sex`, `Age`
-- `Pclass` (ticket class: 1st, 2nd, 3rd)
-- `SibSp` (siblings/spouses aboard), `Parch` (parents/children aboard)
-- `Ticket`, `Fare`, `Cabin`, `Embarked` (port of embarkation)
-- `Survived` (0 = did not survive, 1 = survived) - this is the target column
+## Part A - NumPy Fundamentals
 
-Source: publicly available Titanic dataset (commonly used for beginner ML/EDA practice).
+`part_a_numpy.py` covers:
+- Creating 1D and multi-dimensional arrays (from lists, zeros, ones, arange, linspace, random)
+- Indexing, slicing, and reshaping arrays
+- Mathematical operations on arrays (sum, mean, max/min, row/column sums)
+- Broadcasting examples (scalar, row vector, column vector) with an explanation of why it's useful
+- Vectorized operations compared against a plain Python loop, with timing to show the speed difference
+- Linear algebra: dot product, matrix multiplication, transpose, determinant, and inverse
 
-## Files
+## Part B - Pandas Fundamentals
 
-- `titanic.csv` - original raw dataset
-- `titanic_analysis.py` - Python script that cleans the data and performs the analysis
-- `titanic_cleaned.csv` - output file generated after running the script (cleaned version)
-- `README.md` - this file
+`part_b_pandas.py` covers:
+- Creating a Pandas Series and DataFrame
+- Indexing/selection with `loc` and `iloc`, filtering rows with conditions, sorting values
+- GroupBy operations with aggregation (mean, min, max, count)
+- Merging two DataFrames (inner join and left join) with an explanation of the difference,
+  plus an example of concatenating DataFrames
+
+## Part C - Data Analysis Mini Project
+
+See `mini_project/README.md` for full details. In short: the Titanic dataset is loaded, cleaned
+(missing Age filled with median, Cabin column dropped, missing Embarked filled with mode),
+then explored with summary statistics and groupby-based analysis (survival by gender, class,
+age group, and family size).
 
 ## How to Run
 
 ```
-python3 titanic_analysis.py
+pip install numpy pandas
+
+python3 part_a_numpy.py
+python3 part_b_pandas.py
+cd mini_project && python3 titanic_analysis.py
 ```
-
-Requires `pandas` installed (`pip install pandas`).
-
-## Data Cleaning Process
-
-The raw dataset had missing values in three columns:
-
-| Column   | Missing Values | How it was handled |
-|----------|----------------|---------------------|
-| Age      | 177            | Filled with the median age of all passengers |
-| Cabin    | 687            | Dropped the column entirely (too many missing values to fill reliably) |
-| Embarked | 2              | Filled with the most frequent port (mode) |
-
-After cleaning, there were 0 missing values left in the dataset.
-
-## Analysis Performed
-
-- Overall summary statistics (`describe()`) for numeric columns
-- Overall survival rate
-- Survival rate grouped by gender
-- Survival rate grouped by passenger class
-- Survival rate grouped by class and gender together
-- Average age and fare per passenger class
-- Age binned into groups (Child, Teen, Young Adult, Adult, Senior) and survival rate per group
-- Family size (SibSp + Parch + 1) vs survival rate
-
-## Key Findings
-
-- **Overall survival rate** was about **38.4%** (342 out of 891 passengers survived).
-- **Gender had the biggest impact on survival**: about **74%** of female passengers survived
-  compared to only about **19%** of male passengers, matching the "women and children first"
-  boarding policy.
-- **Passenger class mattered a lot**: 1st class passengers had a survival rate of about **63%**,
-  2nd class about **47%**, and 3rd class only about **24%**. This is likely because 1st class
-  cabins were located closer to the lifeboat deck.
-- Combining class and gender shows the effect stacks: **1st class females had a ~97% survival
-  rate**, while **3rd class males had only ~14%**.
-- 1st class passengers were on average older and paid a much higher fare (~84) compared to
-  3rd class (~14), which lines up with the class-based survival difference.
-- **Children had a noticeably higher survival rate (~58%)** compared to other age groups.
-- Passengers travelling with a small family (2-4 members) had a higher survival rate than
-  people travelling completely alone or in very large families, likely because small groups
-  could help each other while very large families struggled to stay together during evacuation.
-
-## Conclusion
-
-The analysis shows that survival on the Titanic was strongly linked to gender, passenger class,
-and to some extent age and family size, rather than being random. These findings match the
-commonly known historical accounts of the disaster.
